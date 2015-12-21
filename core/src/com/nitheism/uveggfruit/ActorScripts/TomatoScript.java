@@ -19,15 +19,28 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     private BitmapFont bFont;
     private Batch bch;
     ArrayList<FruitScript> fruits;
-    private final int dmg = 10;
     private int hp = 50;
     private Rectangle bounds;
-    private int state = 0;
-    private FruitScript collidetFruit;
-    private CollisionTask collisionTask;
+    private boolean collision = false;
+    private FruitScript collidedFruit;
 
     public boolean dead() {
         return hp <= 0;
+    }
+
+    @Override
+    public void setCollision(boolean inCollision) {
+        this.collision = inCollision;
+    }
+
+    @Override
+    public CompositeActor getEntity() {
+        return tomato;
+    }
+
+    @Override
+    public ArrayList<FruitScript> getFruitsList() {
+        return fruits;
     }
 
     public void setHp(int dmg) {
@@ -35,7 +48,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     }
 
     public int getDmg() {
-        return dmg;
+        return 10;
     }
 
 
@@ -57,41 +70,23 @@ public class TomatoScript extends VeggieScript implements IActorScript {
 
     @Override
     public void act(float delta) {
-        switch (state) {
-            case 0:
-                tomato.setX(tomato.getX() + speed * delta);
-                bounds.setX(tomato.getX());
-                drawHp();
-                if (tomato.getX() >= 1090) {
-                    tomato.remove();
-                }
-                if (collisionFound()) {
-                    collidetFruit.setCol(true);
-                    state++;
-                }
-                break;
-            case 1:
-                if (collisionAct(collidetFruit)) {
-                    if (dead()) {
-                        tomato.remove();
-                        if (!collidetFruit.dead()) {
-                            collidetFruit.setCol(false);
-                        }
-                        tomato.getScripts().remove(this);
-
-                    }
-                    if (collidetFruit.dead()) {
-                        collidetFruit.getEntity().remove();
-                        collidetFruit.getEntity().getScripts().remove(collidetFruit);
-                        fruits.remove(collidetFruit);
-                        if (!dead()) {
-                            state = 0;
-                        }
-
-                    }
-                }
-                break;
-
+        if (collision) {
+            drawHp();
+            CollisionTask collisionTask = new CollisionTask(collidedFruit, this);
+            Timer.schedule(collisionTask, 0, 2, 0);
+        } else {
+            drawHp();
+            tomato.setX(tomato.getX() + speed * delta);
+            bounds.setX(tomato.getX());
+            drawHp();
+            if (tomato.getX() >= 1090 || dead()) {
+                tomato.remove();
+                tomato.getScripts().clear();
+            }
+            if (collisionFound()) {
+                collidedFruit.setCollision(true);
+                setCollision(true);
+            }
 
         }
 
@@ -102,7 +97,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     private boolean collisionFound() {
         for (FruitScript f : fruits) {
             if (f.getBounds().overlaps(bounds)) {
-                collidetFruit = f;
+                collidedFruit = f;
                 return true;
             }
 
@@ -111,13 +106,6 @@ public class TomatoScript extends VeggieScript implements IActorScript {
 
     }
 
-    boolean collisionAct(final FruitScript f) {
-        Timer.schedule(new CollisionTask(f, this), 0, 50);
-        drawHp();
-        f.drawHp();
-        return true;
-
-    }
 
     @Override
     public void dispose() {

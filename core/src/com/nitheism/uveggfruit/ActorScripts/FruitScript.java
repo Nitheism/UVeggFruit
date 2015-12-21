@@ -13,7 +13,7 @@ public abstract class FruitScript {
 
     public abstract void setHp(int dmg);
 
-    public abstract void setCol(boolean col);
+    public abstract void setCollision(boolean inCollision);
 
     public abstract boolean dead();
 

@@ -18,7 +18,21 @@ public class CollisionTask extends Timer.Task {
     public void run() {
         f.setHp(v.getDmg());
         v.setHp(f.getDmg());
-
+        if(v.dead()){
+            v.getEntity().remove();
+            v.getEntity().getScripts().clear();
+            if(!f.dead()){
+                f.setCollision(false);
+            }
+        }
+        else if(f.dead()){
+            v.getFruitsList().remove(f);
+            f.getEntity().remove();
+            f.getEntity().getScripts().clear();
+            if(!v.dead()){
+                v.setCollision(false);
+            }
+        }
 
     }
 }

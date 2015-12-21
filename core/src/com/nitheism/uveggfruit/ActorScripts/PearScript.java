@@ -10,12 +10,10 @@ import com.uwsoft.editor.renderer.scripts.IActorScript;
 public class PearScript extends FruitScript implements IActorScript {
 
     private CompositeActor pear;
-    private final int speed = -100;
     Batch batch;
     BitmapFont bitmapFont;
-    private final int dmg = 15;
     private int hp = 50;
-    private boolean col = false;
+    private boolean collision = false;
     private Rectangle bounds;
 
     public PearScript(Batch batch, BitmapFont bitmapFont) {
@@ -35,14 +33,16 @@ public class PearScript extends FruitScript implements IActorScript {
 
     @Override
     public void act(float delta) {
-        if (col) {
+        if (collision) {
            drawHp();
         } else {
+            int speed = -100;
             pear.setX(pear.getX() + speed * delta);
             bounds.setX(pear.getX());
             drawHp();
-            if (pear.getX() <= 0) {
+            if (pear.getX() <= 0 || dead()) {
                 pear.remove();
+                pear.getScripts().clear();
             }
         }
     }
@@ -60,7 +60,7 @@ public class PearScript extends FruitScript implements IActorScript {
 
     @Override
     public int getDmg() {
-        return dmg;
+        return 10;
     }
 
     @Override
@@ -69,8 +69,8 @@ public class PearScript extends FruitScript implements IActorScript {
     }
 
     @Override
-    public void setCol(boolean col) {
-        this.col = col;
+    public void setCollision(boolean inCollision) {
+        this.collision = inCollision;
     }
 
     @Override
