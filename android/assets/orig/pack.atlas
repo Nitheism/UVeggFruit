@@ -1,0 +1,48 @@
+
+pack.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+krusha
+  rotate: false
+  xy: 260, 324
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+moon
+  rotate: false
+  xy: 2, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+mountine
+  rotate: false
+  xy: 2, 390
+  size: 1280, 512
+  orig: 1280, 512
+  offset: 0, 0
+  index: -1
+tile
+  rotate: false
+  xy: 1284, 774
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tomato
+  rotate: false
+  xy: 1284, 708
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tombstone256
+  rotate: false
+  xy: 2, 132
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
