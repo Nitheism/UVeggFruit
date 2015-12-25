@@ -57,8 +57,8 @@ public class PlayStage extends Stage {
         super.act();
         Gdx.input.setInputProcessor(this);
         if (Gdx.input.justTouched()) {
-            tScript = new TomatoScript(getBatch(),bitmapFont,fruits);
-            pScript = new PearScript(getBatch(),bitmapFont);
+            tScript = new TomatoScript(getBatch(), bitmapFont, fruits);
+            pScript = new PearScript(getBatch(), bitmapFont);
             tomato = new CompositeActor(stageLoader.loadVoFromLibrary("tomato"), stageLoader.getRm());
             pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
             tomato.addScript(tScript);
@@ -76,7 +76,6 @@ public class PlayStage extends Stage {
     public void dispose() {
         super.dispose();
         bitmapFont.dispose();
-
 
 
     }

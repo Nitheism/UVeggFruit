@@ -4,44 +4,86 @@ size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+exitbutton
+  rotate: false
+  xy: 2, 68
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
 krusha
   rotate: false
-  xy: 260, 324
+  xy: 2, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 moon
   rotate: false
-  xy: 2, 2
+  xy: 1284, 580
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 mountine
   rotate: false
-  xy: 2, 390
+  xy: 2, 456
   size: 1280, 512
   orig: 1280, 512
   offset: 0, 0
   index: -1
+onlinebutton
+  rotate: false
+  xy: 1542, 840
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+playbutton
+  rotate: false
+  xy: 260, 196
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+pressedexit
+  rotate: false
+  xy: 260, 326
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+pressedonline
+  rotate: false
+  xy: 1284, 710
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+pressedplay
+  rotate: false
+  xy: 1284, 840
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
 tile
   rotate: false
-  xy: 1284, 774
+  xy: 518, 326
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 tomato
   rotate: false
-  xy: 1284, 708
+  xy: 1542, 774
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tombstone256
   rotate: false
-  xy: 2, 132
+  xy: 2, 198
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
