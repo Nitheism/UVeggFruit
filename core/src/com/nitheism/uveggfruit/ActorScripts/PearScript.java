@@ -3,6 +3,7 @@ package com.nitheism.uveggfruit.ActorScripts;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
+import com.nitheism.uveggfruit.Players.VeggiePlayer;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 import com.uwsoft.editor.renderer.scripts.IActorScript;
 
@@ -15,10 +16,12 @@ public class PearScript extends FruitScript implements IActorScript {
     private int hp = 50;
     private boolean collision = false;
     private Rectangle bounds;
+    private VeggiePlayer veggiePlayer;
 
-    public PearScript(Batch batch, BitmapFont bitmapFont) {
+    public PearScript(Batch batch, BitmapFont bitmapFont,VeggiePlayer v) {
         this.batch = batch;
         this.bitmapFont = bitmapFont;
+        veggiePlayer = v;
 
     }
 
@@ -40,7 +43,13 @@ public class PearScript extends FruitScript implements IActorScript {
             pear.setX(pear.getX() + speed * delta);
             bounds.setX(pear.getX());
             drawHp();
-            if (pear.getX() <= 0 || dead()) {
+            if (pear.getX() <= 0) {
+                veggiePlayer.setHealth(10);
+                pear.remove();
+                pear.getScripts().clear();
+            }
+            if(dead()){
+                veggiePlayer.setMoney(10);
                 pear.remove();
                 pear.getScripts().clear();
             }

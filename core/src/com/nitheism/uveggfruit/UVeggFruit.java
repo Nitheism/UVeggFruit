@@ -4,8 +4,10 @@ import com.badlogic.gdx.Game;
 import com.nitheism.uveggfruit.Stages.MenuStage;
 
 
+
 public class UVeggFruit extends Game {
     private MenuStage menuStage;
+
 
 
     @Override

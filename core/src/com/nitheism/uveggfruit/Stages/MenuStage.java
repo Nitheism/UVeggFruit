@@ -3,9 +3,13 @@ package com.nitheism.uveggfruit.Stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitheism.uveggfruit.UVeggFruit;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -13,19 +17,27 @@ import com.uwsoft.editor.renderer.scene2d.ButtonClickListener;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 
 
-public class MenuStage extends Stage implements Screen {
+public class MenuStage implements Screen {
     private PlayStage playStage;
     private UVeggFruit uVeggFruit;
+    private Stage stage;
+
+
+    private OrthographicCamera camera;
+    private Viewport vp;
 
 
     public MenuStage(UVeggFruit uvf) {
         uVeggFruit = uvf;
-        initMenu();
-
     }
 
 
-    private void initMenu() {
+    @Override
+    public void show() {
+        camera = new OrthographicCamera();
+        vp = new StretchViewport(1280, 720, camera);
+        stage = new Stage(vp);
+        Gdx.input.setInputProcessor(stage);
         ButtonClickListener buttonClickListener = new ButtonClickListener();
         SceneLoader sc = new SceneLoader();
         CompositeItemVO sceneComposites = new CompositeItemVO(sc.loadScene("MainMenu").composite);
@@ -35,33 +47,43 @@ public class MenuStage extends Stage implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                    playStage = new PlayStage();
-                    uVeggFruit.setScreen(playStage);
+                playStage = new PlayStage(uVeggFruit);
+                uVeggFruit.setScreen(playStage);
             }
         });
-        addActor(UI);
+        stage.addActor(UI);
 
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void render(float delta) {
+        camera.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.act();
-        this.draw();
+        stage.act();
+        stage.draw();
     }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+
+    }
+
     @Override
-    public void pause() {}
+    public void pause() {
+    }
+
     @Override
-    public void resume() {}
+    public void resume() {
+    }
+
     @Override
-    public void hide() {}
+    public void hide() {
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }

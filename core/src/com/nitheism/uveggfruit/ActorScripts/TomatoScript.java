@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
+import com.nitheism.uveggfruit.Players.FruitPlayer;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 import com.uwsoft.editor.renderer.scripts.IActorScript;
 
@@ -23,6 +24,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     private Rectangle bounds;
     private boolean collision = false;
     private FruitScript collidedFruit;
+    private FruitPlayer fruitPlayer;
 
     public boolean dead() {
         return hp <= 0;
@@ -52,10 +54,11 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     }
 
 
-    public TomatoScript(Batch b, BitmapFont bf, ArrayList<FruitScript> fruits) {
-        this.bch = b;
-        this.bFont = bf;
+    public TomatoScript(Batch b, BitmapFont bf, ArrayList<FruitScript> fruits,FruitPlayer f) {
+        bch = b;
+        bFont = bf;
         this.fruits = fruits;
+        fruitPlayer = f;
     }
 
     @Override
@@ -79,7 +82,13 @@ public class TomatoScript extends VeggieScript implements IActorScript {
             tomato.setX(tomato.getX() + speed * delta);
             bounds.setX(tomato.getX());
             drawHp();
-            if (tomato.getX() >= 1090 || dead()) {
+            if (tomato.getX() >= 1090) {
+                fruitPlayer.setHealth(10);
+                tomato.remove();
+                tomato.getScripts().clear();
+            }
+            if(dead()){
+                fruitPlayer.setMoney(10);
                 tomato.remove();
                 tomato.getScripts().clear();
             }
