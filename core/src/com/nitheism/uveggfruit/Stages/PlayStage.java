@@ -26,7 +26,7 @@ import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 import java.util.ArrayList;
 
 
-public class PlayStage implements Screen {
+public class PlayStage implements  Screen {
 
     private OrthographicCamera camera;
     private Viewport vp;
@@ -112,6 +112,7 @@ public class PlayStage implements Screen {
 
             }
         });
+
         stage.addActor(UI);
         draw();
 
@@ -124,6 +125,7 @@ public class PlayStage implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+        draw();
     }
 
     @Override
