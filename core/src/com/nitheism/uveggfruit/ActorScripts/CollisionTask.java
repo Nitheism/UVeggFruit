@@ -27,8 +27,8 @@ public class CollisionTask extends Timer.Task {
         }
         else if(f.dead()){
             v.getFruitsList().remove(f);
-            f.getEntity().remove();
-            f.getEntity().getScripts().clear();
+           //f.getEntity().remove();
+            //f.getEntity().getScripts().clear();
             if(!v.dead()){
                 v.setCollision(false);
             }

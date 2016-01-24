@@ -20,4 +20,6 @@ public abstract class VeggieScript {
     public abstract CompositeActor getEntity();
 
     public abstract ArrayList<FruitScript> getFruitsList();
+
+
 }

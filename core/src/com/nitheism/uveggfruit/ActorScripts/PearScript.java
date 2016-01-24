@@ -18,7 +18,7 @@ public class PearScript extends FruitScript implements IActorScript {
     private Rectangle bounds;
     private VeggiePlayer veggiePlayer;
 
-    public PearScript(Batch batch, BitmapFont bitmapFont,VeggiePlayer v) {
+    public PearScript(Batch batch, BitmapFont bitmapFont, VeggiePlayer v) {
         this.batch = batch;
         this.bitmapFont = bitmapFont;
         veggiePlayer = v;
@@ -37,7 +37,12 @@ public class PearScript extends FruitScript implements IActorScript {
     @Override
     public void act(float delta) {
         if (collision) {
-           drawHp();
+            drawHp();
+            if (dead()) {
+                veggiePlayer.setMoney(10);
+                pear.remove();
+                pear.getScripts().clear();
+            }
         } else {
             int speed = -100;
             pear.setX(pear.getX() + speed * delta);
@@ -48,11 +53,7 @@ public class PearScript extends FruitScript implements IActorScript {
                 pear.remove();
                 pear.getScripts().clear();
             }
-            if(dead()){
-                veggiePlayer.setMoney(10);
-                pear.remove();
-                pear.getScripts().clear();
-            }
+
         }
     }
 
@@ -92,7 +93,7 @@ public class PearScript extends FruitScript implements IActorScript {
         return pear;
     }
 
-    public void drawHp(){
+    public void drawHp() {
         batch.begin();
         bitmapFont.draw(batch, Integer.toString(hp), pear.getX() + 20, pear.getY() + 95);
         batch.end();

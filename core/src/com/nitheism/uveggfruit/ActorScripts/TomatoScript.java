@@ -75,8 +75,14 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     public void act(float delta) {
         if (collision) {
             drawHp();
+            if(dead()){
+                fruitPlayer.setMoney(10);
+                tomato.remove();
+                tomato.getScripts().clear();
+            }
             CollisionTask collisionTask = new CollisionTask(collidedFruit, this);
-            Timer.schedule(collisionTask, 0, 2, 0);
+            Timer.schedule(collisionTask,0,0,0);
+
         } else {
             drawHp();
             tomato.setX(tomato.getX() + speed * delta);
@@ -87,11 +93,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
                 tomato.remove();
                 tomato.getScripts().clear();
             }
-            if(dead()){
-                fruitPlayer.setMoney(10);
-                tomato.remove();
-                tomato.getScripts().clear();
-            }
+
             if (collisionFound()) {
                 collidedFruit.setCollision(true);
                 setCollision(true);

@@ -8,35 +8,22 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.nitheism.uveggfruit.ActorScripts.FruitScript;
-import com.nitheism.uveggfruit.ActorScripts.TomatoScript;
+import com.nitheism.uveggfruit.ActorScripts.FirstLevelScript;
 import com.nitheism.uveggfruit.Players.FruitPlayer;
 import com.nitheism.uveggfruit.Players.VeggiePlayer;
 import com.nitheism.uveggfruit.UVeggFruit;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.scene2d.ButtonClickListener;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 
-import java.util.ArrayList;
 
-
-public class PlayStage implements  Screen {
+public class PlayStage implements Screen {
 
     private OrthographicCamera camera;
-    private Viewport vp;
     private Stage stage;
-    private SceneLoader stageLoader;
-    private CompositeActor tomato;
-    // private CompositeActor pear;
-    private TomatoScript tScript;
-    // private PearScript pScript;
-    private ArrayList<FruitScript> fruits;
     private BitmapFont bitmapFont;
     private FruitPlayer fruitPlayer;
     private VeggiePlayer veggiePlayer;
@@ -48,7 +35,6 @@ public class PlayStage implements  Screen {
         this.uvf = uvf;
 
     }
-
 
 
     public void draw() {
@@ -81,14 +67,14 @@ public class PlayStage implements  Screen {
     @Override
     public void show() {
         camera = new OrthographicCamera();
-        vp = new StretchViewport(1280, 720, camera);
+        Viewport vp = new StretchViewport(1280, 720, camera);
         stage = new Stage(vp);
         Gdx.input.setInputProcessor(stage);
         fruitPlayer = new FruitPlayer();
         veggiePlayer = new VeggiePlayer();
-        fruits = new ArrayList<FruitScript>();
-        stageLoader = new SceneLoader();
-        ButtonClickListener buttonClickListener = new ButtonClickListener();
+
+        SceneLoader stageLoader = new SceneLoader();
+
         FreeTypeFontGenerator FTFG = new FreeTypeFontGenerator(Gdx.files.internal("Karmakooma.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter FTFP = new FreeTypeFontGenerator.FreeTypeFontParameter();
         FTFP.color = Color.WHITE;
@@ -97,21 +83,9 @@ public class PlayStage implements  Screen {
         FTFG.dispose();
         CompositeItemVO sceneComposites = new CompositeItemVO(stageLoader.loadScene("MainScene").composite);
         CompositeActor UI = new CompositeActor(sceneComposites, stageLoader.getRm());
-        UI.getItem("tomatobtn").addListener(buttonClickListener);
-        UI.getItem("tomatobtn").addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                if (veggiePlayer.getMoney() >= 10) {
-                    tScript = new TomatoScript(stage.getBatch(), bitmapFont, fruits, fruitPlayer);
-                    tomato = new CompositeActor(stageLoader.loadVoFromLibrary("tomato"), stageLoader.getRm());
-                    tomato.addScript(tScript);
-                    stage.addActor(tomato);
-                    veggiePlayer.setMoney(-10);
-                }
+        FirstLevelScript firstLevelScript = new FirstLevelScript(stageLoader, bitmapFont, stage, veggiePlayer, fruitPlayer);
+        UI.addScript(firstLevelScript);
 
-            }
-        });
 
         stage.addActor(UI);
         draw();
@@ -126,11 +100,13 @@ public class PlayStage implements  Screen {
         stage.act(delta);
         stage.draw();
         draw();
+
+
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height,true);
+        stage.getViewport().update(width, height, true);
 
     }
 
