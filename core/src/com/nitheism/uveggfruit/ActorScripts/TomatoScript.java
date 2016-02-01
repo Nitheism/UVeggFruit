@@ -15,16 +15,23 @@ import java.util.ArrayList;
 public class TomatoScript extends VeggieScript implements IActorScript {
 
 
-    private CompositeActor tomato;
     private static final int speed = 100;
+    ArrayList<FruitScript> fruits;
+    private CompositeActor tomato;
     private BitmapFont bFont;
     private Batch bch;
-    ArrayList<FruitScript> fruits;
     private int hp = 50;
     private Rectangle bounds;
     private boolean collision = false;
     private FruitScript collidedFruit;
     private FruitPlayer fruitPlayer;
+
+    public TomatoScript(Batch b, BitmapFont bf, ArrayList<FruitScript> fruits, FruitPlayer f) {
+        bch = b;
+        bFont = bf;
+        this.fruits = fruits;
+        fruitPlayer = f;
+    }
 
     public boolean dead() {
         return hp <= 0;
@@ -51,14 +58,6 @@ public class TomatoScript extends VeggieScript implements IActorScript {
 
     public int getDmg() {
         return 10;
-    }
-
-
-    public TomatoScript(Batch b, BitmapFont bf, ArrayList<FruitScript> fruits,FruitPlayer f) {
-        bch = b;
-        bFont = bf;
-        this.fruits = fruits;
-        fruitPlayer = f;
     }
 
     @Override
@@ -89,7 +88,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
             bounds.setX(tomato.getX());
             drawHp();
             if (tomato.getX() >= 1090) {
-                fruitPlayer.setHealth(10);
+                fruitPlayer.setHealth(100);
                 tomato.remove();
                 tomato.getScripts().clear();
             }

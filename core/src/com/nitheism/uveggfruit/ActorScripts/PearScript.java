@@ -10,9 +10,9 @@ import com.uwsoft.editor.renderer.scripts.IActorScript;
 
 public class PearScript extends FruitScript implements IActorScript {
 
-    private CompositeActor pear;
     Batch batch;
     BitmapFont bitmapFont;
+    private CompositeActor pear;
     private int hp = 50;
     private boolean collision = false;
     private Rectangle bounds;
@@ -48,8 +48,8 @@ public class PearScript extends FruitScript implements IActorScript {
             pear.setX(pear.getX() + speed * delta);
             bounds.setX(pear.getX());
             drawHp();
-            if (pear.getX() <= 0) {
-                veggiePlayer.setHealth(10);
+            if (pear.getX() <= 130) {
+                veggiePlayer.setHealth(100);
                 pear.remove();
                 pear.getScripts().clear();
             }

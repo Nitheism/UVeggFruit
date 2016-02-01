@@ -43,16 +43,23 @@ public class PlayStage implements Screen {
             stage.getBatch().begin();
             bitmapFont.draw(stage.getBatch(), "DEFEAT", 640, 360);
             stage.getBatch().end();
-            mStage = new MenuStage(uvf);
-            this.hide();
-            uvf.setScreen(mStage);
+            if (Gdx.input.justTouched()) {
+                mStage = new MenuStage(uvf);
+                this.hide();
+                uvf.setScreen(mStage);
+            }
+
         }
         if (fruitPlayer.getHealth() <= 0) {
             stage.getBatch().begin();
             bitmapFont.draw(stage.getBatch(), "VICTORY", 640, 360);
             stage.getBatch().end();
-            mStage = new MenuStage(uvf);
-            uvf.setScreen(mStage);
+            if (Gdx.input.justTouched()) {
+                mStage = new MenuStage(uvf);
+                this.hide();
+                uvf.setScreen(mStage);
+            }
+
         }
         stage.getBatch().begin();
         bitmapFont.draw(stage.getBatch(), Integer.toString(fruitPlayer.getHealth()), 1200, 390);
@@ -72,9 +79,7 @@ public class PlayStage implements Screen {
         Gdx.input.setInputProcessor(stage);
         fruitPlayer = new FruitPlayer();
         veggiePlayer = new VeggiePlayer();
-
         SceneLoader stageLoader = new SceneLoader();
-
         FreeTypeFontGenerator FTFG = new FreeTypeFontGenerator(Gdx.files.internal("Karmakooma.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter FTFP = new FreeTypeFontGenerator.FreeTypeFontParameter();
         FTFP.color = Color.WHITE;
@@ -85,8 +90,6 @@ public class PlayStage implements Screen {
         CompositeActor UI = new CompositeActor(sceneComposites, stageLoader.getRm());
         FirstLevelScript firstLevelScript = new FirstLevelScript(stageLoader, bitmapFont, stage, veggiePlayer, fruitPlayer);
         UI.addScript(firstLevelScript);
-
-
         stage.addActor(UI);
         draw();
 

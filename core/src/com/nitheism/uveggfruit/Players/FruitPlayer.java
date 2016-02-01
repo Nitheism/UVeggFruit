@@ -2,8 +2,8 @@ package com.nitheism.uveggfruit.Players;
 
 
 public class FruitPlayer  {
-   private int health = 1000;
-   private int money = 30;
+    private int health = 500;
+    private int money = 50;
    private int points = 0;
 
     public int getHealth() {

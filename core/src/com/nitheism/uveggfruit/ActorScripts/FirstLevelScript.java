@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Timer;
 import com.nitheism.uveggfruit.Players.FruitPlayer;
 import com.nitheism.uveggfruit.Players.VeggiePlayer;
 import com.uwsoft.editor.renderer.SceneLoader;
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 public class FirstLevelScript implements IActorScript {
 
     private SceneLoader stageLoader;
+    private float timeaux = 0;
     private BitmapFont bitmapFont;
     private Stage stage;
     private CompositeActor pear;
@@ -51,16 +51,6 @@ public class FirstLevelScript implements IActorScript {
                     tomato.addScript(tScript);
                     stage.addActor(tomato);
                     veggiePlayer.setMoney(-10);
-                    Timer.schedule(new Timer.Task() {
-                        @Override
-                        public void run() {
-                            pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
-                            pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer);
-                            pear.addScript(pScript);
-                            stage.addActor(pear);
-                            fruits.add(pScript);
-                        }
-                    }, 2);
 
                 }
 
@@ -70,7 +60,16 @@ public class FirstLevelScript implements IActorScript {
 
     @Override
     public void act(float delta) {
-
+        if (timeaux >= 15) {
+            pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer);
+            pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
+            pear.addScript(pScript);
+            stage.addActor(pear);
+            fruits.add(pScript);
+            timeaux = 0;
+        } else {
+            timeaux += delta;
+        }
 
     }
 
