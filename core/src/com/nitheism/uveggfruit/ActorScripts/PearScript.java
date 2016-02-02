@@ -44,7 +44,7 @@ public class PearScript extends FruitScript implements IActorScript {
                 pear.getScripts().clear();
             }
         } else {
-            int speed = -100;
+            int speed = -150;
             pear.setX(pear.getX() + speed * delta);
             bounds.setX(pear.getX());
             drawHp();

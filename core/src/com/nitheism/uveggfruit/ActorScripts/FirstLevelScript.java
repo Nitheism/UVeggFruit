@@ -20,8 +20,6 @@ public class FirstLevelScript implements IActorScript {
     private float timeaux = 0;
     private BitmapFont bitmapFont;
     private Stage stage;
-    private CompositeActor pear;
-    private PearScript pScript;
     private VeggiePlayer veggiePlayer;
     private FruitPlayer fruitPlayer;
     private TomatoScript tScript;
@@ -61,8 +59,8 @@ public class FirstLevelScript implements IActorScript {
     @Override
     public void act(float delta) {
         if (timeaux >= 15) {
-            pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer);
-            pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
+            PearScript pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer);
+            CompositeActor pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
             pear.addScript(pScript);
             stage.addActor(pear);
             fruits.add(pScript);

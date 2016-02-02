@@ -28,6 +28,7 @@ public class PlayStage implements Screen {
     private FruitPlayer fruitPlayer;
     private VeggiePlayer veggiePlayer;
     private UVeggFruit uvf;
+    private CompositeActor UI;
     private float densityT = 30 * Gdx.graphics.getDensity();
 
 
@@ -43,6 +44,7 @@ public class PlayStage implements Screen {
             stage.getBatch().begin();
             bitmapFont.draw(stage.getBatch(), "DEFEAT", 640, 360);
             stage.getBatch().end();
+            UI.getScripts().clear();
             if (Gdx.input.justTouched()) {
                 mStage = new MenuStage(uvf);
                 this.hide();
@@ -54,6 +56,7 @@ public class PlayStage implements Screen {
             stage.getBatch().begin();
             bitmapFont.draw(stage.getBatch(), "VICTORY", 640, 360);
             stage.getBatch().end();
+            UI.getScripts().clear();
             if (Gdx.input.justTouched()) {
                 mStage = new MenuStage(uvf);
                 this.hide();
@@ -87,7 +90,7 @@ public class PlayStage implements Screen {
         bitmapFont = FTFG.generateFont(FTFP);
         FTFG.dispose();
         CompositeItemVO sceneComposites = new CompositeItemVO(stageLoader.loadScene("MainScene").composite);
-        CompositeActor UI = new CompositeActor(sceneComposites, stageLoader.getRm());
+        UI = new CompositeActor(sceneComposites, stageLoader.getRm());
         FirstLevelScript firstLevelScript = new FirstLevelScript(stageLoader, bitmapFont, stage, veggiePlayer, fruitPlayer);
         UI.addScript(firstLevelScript);
         stage.addActor(UI);

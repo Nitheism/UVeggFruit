@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class TomatoScript extends VeggieScript implements IActorScript {
 
 
-    private static final int speed = 100;
+    private static final int speed = 150;
     ArrayList<FruitScript> fruits;
     private CompositeActor tomato;
     private BitmapFont bFont;

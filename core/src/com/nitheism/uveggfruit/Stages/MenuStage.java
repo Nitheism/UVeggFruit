@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitheism.uveggfruit.UVeggFruit;
@@ -24,7 +23,6 @@ public class MenuStage implements Screen {
 
 
     private OrthographicCamera camera;
-    private Viewport vp;
 
 
     public MenuStage(UVeggFruit uvf) {
@@ -35,7 +33,7 @@ public class MenuStage implements Screen {
     @Override
     public void show() {
         camera = new OrthographicCamera();
-        vp = new StretchViewport(1280, 720, camera);
+        Viewport vp = new StretchViewport(1280, 720, camera);
         stage = new Stage(vp);
         Gdx.input.setInputProcessor(stage);
         ButtonClickListener buttonClickListener = new ButtonClickListener();

@@ -6,13 +6,11 @@ import com.nitheism.uveggfruit.Stages.MenuStage;
 
 
 public class UVeggFruit extends Game {
-    private MenuStage menuStage;
-
 
 
     @Override
     public void create() {
-        menuStage = new MenuStage(this);
+        MenuStage menuStage = new MenuStage(this);
         setScreen(menuStage);
     }
 
