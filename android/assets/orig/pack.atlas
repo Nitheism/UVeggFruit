@@ -4,16 +4,30 @@ size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+Music-96
+  rotate: false
+  xy: 2, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+Music-96 (1)
+  rotate: false
+  xy: 260, 130
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
 coin
   rotate: false
-  xy: 518, 292
+  xy: 1284, 578
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 exitbutton
   rotate: false
-  xy: 1284, 710
+  xy: 1284, 742
   size: 256, 128
   split: 0, 0, 8, 5
   orig: 256, 128
@@ -21,7 +35,7 @@ exitbutton
   index: -1
 krusha
   rotate: false
-  xy: 2, 2
+  xy: 518, 292
   size: 64, 64
   split: 16, 10, 2, 0
   orig: 64, 64
@@ -29,14 +43,14 @@ krusha
   index: -1
 moon
   rotate: false
-  xy: 1542, 710
+  xy: 1542, 742
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 mountine
   rotate: false
-  xy: 2, 456
+  xy: 2, 488
   size: 1280, 512
   split: 0, 0, 0, 0
   orig: 1280, 512
@@ -44,7 +58,7 @@ mountine
   index: -1
 onlinebutton
   rotate: false
-  xy: 2, 68
+  xy: 2, 100
   size: 256, 128
   split: 16, 8, 8, 6
   orig: 256, 128
@@ -52,7 +66,7 @@ onlinebutton
   index: -1
 playbutton
   rotate: false
-  xy: 1542, 840
+  xy: 1542, 872
   size: 256, 128
   split: 16, 7, 6, 5
   orig: 256, 128
@@ -60,28 +74,28 @@ playbutton
   index: -1
 pressedexit
   rotate: false
-  xy: 260, 326
+  xy: 260, 358
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
   index: -1
 pressedonline
   rotate: false
-  xy: 260, 196
+  xy: 260, 228
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
   index: -1
 pressedplay
   rotate: false
-  xy: 1284, 840
+  xy: 1284, 872
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
   index: -1
 tile
   rotate: false
-  xy: 1800, 840
+  xy: 1800, 872
   size: 128, 128
   split: 0, 0, 0, 0
   orig: 128, 128
@@ -89,7 +103,7 @@ tile
   index: -1
 tomato
   rotate: false
-  xy: 260, 130
+  xy: 648, 422
   size: 64, 64
   split: 0, 0, 0, 0
   orig: 64, 64
@@ -97,7 +111,7 @@ tomato
   index: -1
 tomatobtn
   rotate: false
-  xy: 1284, 580
+  xy: 1284, 612
   size: 128, 128
   split: 0, 0, 0, 0
   orig: 128, 128
@@ -105,14 +119,14 @@ tomatobtn
   index: -1
 tomatobtnpress
   rotate: false
-  xy: 518, 326
+  xy: 518, 358
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 tombstone256
   rotate: false
-  xy: 2, 198
+  xy: 2, 230
   size: 256, 256
   split: 0, 20, 0, 0
   orig: 256, 256

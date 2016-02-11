@@ -2,6 +2,7 @@ package com.nitheism.uveggfruit.Stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,18 +21,22 @@ public class MenuStage implements Screen {
     private PlayStage playStage;
     private UVeggFruit uVeggFruit;
     private Stage stage;
+    private Music music;
+
 
 
     private OrthographicCamera camera;
 
 
-    public MenuStage(UVeggFruit uvf) {
+    public MenuStage(UVeggFruit uvf, Music music) {
         uVeggFruit = uvf;
+        this.music = music;
     }
 
 
     @Override
     public void show() {
+
         camera = new OrthographicCamera();
         Viewport vp = new StretchViewport(1280, 720, camera);
         stage = new Stage(vp);
@@ -40,15 +45,42 @@ public class MenuStage implements Screen {
         SceneLoader sc = new SceneLoader();
         CompositeItemVO sceneComposites = new CompositeItemVO(sc.loadScene("MainMenu").composite);
         CompositeActor UI = new CompositeActor(sceneComposites, sc.getRm());
+        music.setLooping(true);
+        music.play();
         UI.getItem("playbutton").addListener(buttonClickListener);
+        UI.getItem("musicbutton").addListener(buttonClickListener);
+        UI.getItem("musicbutton").addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (!music.isPlaying()) {
+                    music.play();
+
+                } else {
+                    music.dispose();
+
+                }
+
+            }
+
+        });
         UI.getItem("playbutton").addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                playStage = new PlayStage(uVeggFruit);
+                playStage = new PlayStage(uVeggFruit, music, music.isPlaying());
                 uVeggFruit.setScreen(playStage);
             }
         });
+        UI.getItem("exitbutton").addListener(buttonClickListener);
+        UI.getItem("exitbutton").addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                stage.dispose();
+                uVeggFruit.dispose();
+            }
+        });
+        UI.getItem("onlinebutton").addListener(buttonClickListener);
         stage.addActor(UI);
 
     }
@@ -82,6 +114,6 @@ public class MenuStage implements Screen {
 
     @Override
     public void dispose() {
-
+        music.dispose();
     }
 }

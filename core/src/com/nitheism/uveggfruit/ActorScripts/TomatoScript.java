@@ -1,6 +1,8 @@
 package com.nitheism.uveggfruit.ActorScripts;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
@@ -25,12 +27,15 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     private boolean collision = false;
     private FruitScript collidedFruit;
     private FruitPlayer fruitPlayer;
+    private Sound punch;
+    private boolean musicOn;
 
-    public TomatoScript(Batch b, BitmapFont bf, ArrayList<FruitScript> fruits, FruitPlayer f) {
+    public TomatoScript(Batch b, BitmapFont bf, ArrayList<FruitScript> fruits, FruitPlayer f, boolean musicOn) {
         bch = b;
         bFont = bf;
         this.fruits = fruits;
         fruitPlayer = f;
+        this.musicOn = musicOn;
     }
 
     public boolean dead() {
@@ -66,6 +71,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
         tomato.setPosition(100, 129);
         bounds = new Rectangle(tomato.getX(), tomato.getY(), tomato.getWidth(), tomato.getHeight());
         drawHp();
+        punch = Gdx.audio.newSound(Gdx.files.internal("punch_or_whack_-Vladimir.mp3"));
 
 
     }
@@ -74,13 +80,13 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     public void act(float delta) {
         if (collision) {
             drawHp();
-            if(dead()){
+            if (dead()) {
                 fruitPlayer.setMoney(10);
                 tomato.remove();
                 tomato.getScripts().clear();
             }
             CollisionTask collisionTask = new CollisionTask(collidedFruit, this);
-            Timer.schedule(collisionTask,0,0,0);
+            Timer.schedule(collisionTask, 0, 0, 0);
 
         } else {
             drawHp();
@@ -96,6 +102,9 @@ public class TomatoScript extends VeggieScript implements IActorScript {
             if (collisionFound()) {
                 collidedFruit.setCollision(true);
                 setCollision(true);
+                if (musicOn) {
+                    punch.play();
+                }
             }
 
         }
@@ -121,6 +130,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     public void dispose() {
         bch.dispose();
         bFont.dispose();
+        punch.dispose();
     }
 
     private void drawHp() {

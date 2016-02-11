@@ -3,6 +3,7 @@ package com.nitheism.uveggfruit.Stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,11 +31,14 @@ public class PlayStage implements Screen {
     private UVeggFruit uvf;
     private CompositeActor UI;
     private float densityT = 30 * Gdx.graphics.getDensity();
+    private Music music;
+    private boolean musicOn;
 
 
-    public PlayStage(UVeggFruit uvf) {
+    public PlayStage(UVeggFruit uvf, Music music, boolean musicOn) {
         this.uvf = uvf;
-
+        this.music = music;
+        this.musicOn = musicOn;
     }
 
 
@@ -46,7 +50,7 @@ public class PlayStage implements Screen {
             stage.getBatch().end();
             UI.getScripts().clear();
             if (Gdx.input.justTouched()) {
-                mStage = new MenuStage(uvf);
+                mStage = new MenuStage(uvf, music);
                 this.hide();
                 uvf.setScreen(mStage);
             }
@@ -58,7 +62,7 @@ public class PlayStage implements Screen {
             stage.getBatch().end();
             UI.getScripts().clear();
             if (Gdx.input.justTouched()) {
-                mStage = new MenuStage(uvf);
+                mStage = new MenuStage(uvf, music);
                 this.hide();
                 uvf.setScreen(mStage);
             }
@@ -91,11 +95,14 @@ public class PlayStage implements Screen {
         FTFG.dispose();
         CompositeItemVO sceneComposites = new CompositeItemVO(stageLoader.loadScene("MainScene").composite);
         UI = new CompositeActor(sceneComposites, stageLoader.getRm());
-        FirstLevelScript firstLevelScript = new FirstLevelScript(stageLoader, bitmapFont, stage, veggiePlayer, fruitPlayer);
+        FirstLevelScript firstLevelScript = new FirstLevelScript(stageLoader, bitmapFont, stage, veggiePlayer, fruitPlayer, musicOn);
         UI.addScript(firstLevelScript);
         stage.addActor(UI);
         draw();
-
+        if (musicOn) {
+            music.setLooping(true);
+            music.play();
+        }
     }
 
     @Override
@@ -132,7 +139,7 @@ public class PlayStage implements Screen {
     public void dispose() {
 
         bitmapFont.dispose();
-
+        music.dispose();
 
     }
 }

@@ -25,13 +25,15 @@ public class FirstLevelScript implements IActorScript {
     private TomatoScript tScript;
     private CompositeActor tomato;
     private ArrayList<FruitScript> fruits;
+    private boolean musicOn;
 
-    public FirstLevelScript(SceneLoader stageLoader, BitmapFont bitmapFont, Stage stage, VeggiePlayer vp, FruitPlayer fp) {
+    public FirstLevelScript(SceneLoader stageLoader, BitmapFont bitmapFont, Stage stage, VeggiePlayer vp, FruitPlayer fp, boolean musicOn) {
         this.stageLoader = stageLoader;
         this.bitmapFont = bitmapFont;
         this.stage = stage;
         this.veggiePlayer = vp;
         this.fruitPlayer = fp;
+        this.musicOn = musicOn;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class FirstLevelScript implements IActorScript {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if (veggiePlayer.getMoney() >= 10) {
-                    tScript = new TomatoScript(stage.getBatch(), bitmapFont, fruits, fruitPlayer);
+                    tScript = new TomatoScript(stage.getBatch(), bitmapFont, fruits, fruitPlayer, musicOn);
                     tomato = new CompositeActor(stageLoader.loadVoFromLibrary("tomato"), stageLoader.getRm());
                     tomato.addScript(tScript);
                     stage.addActor(tomato);
