@@ -22,21 +22,23 @@ public class MenuStage implements Screen {
     private UVeggFruit uVeggFruit;
     private Stage stage;
     private Music music;
+    private boolean musicOn;
 
 
 
     private OrthographicCamera camera;
 
 
-    public MenuStage(UVeggFruit uvf, Music music) {
+    public MenuStage(UVeggFruit uvf, Music music, boolean musicOn) {
         uVeggFruit = uvf;
         this.music = music;
+        this.musicOn = musicOn;
+
     }
 
 
     @Override
     public void show() {
-
         camera = new OrthographicCamera();
         Viewport vp = new StretchViewport(1280, 720, camera);
         stage = new Stage(vp);
@@ -45,8 +47,11 @@ public class MenuStage implements Screen {
         SceneLoader sc = new SceneLoader();
         CompositeItemVO sceneComposites = new CompositeItemVO(sc.loadScene("MainMenu").composite);
         CompositeActor UI = new CompositeActor(sceneComposites, sc.getRm());
-        music.setLooping(true);
-        music.play();
+        if (musicOn) {
+            music.setLooping(true);
+            music.play();
+        }
+
         UI.getItem("playbutton").addListener(buttonClickListener);
         UI.getItem("musicbutton").addListener(buttonClickListener);
         UI.getItem("musicbutton").addListener(new ClickListener() {

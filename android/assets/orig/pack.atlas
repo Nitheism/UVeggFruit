@@ -20,14 +20,14 @@ Music-96 (1)
   index: -1
 coin
   rotate: false
-  xy: 1284, 578
+  xy: 776, 324
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 exitbutton
   rotate: false
-  xy: 1284, 742
+  xy: 1542, 872
   size: 256, 128
   split: 0, 0, 8, 5
   orig: 256, 128
@@ -35,15 +35,22 @@ exitbutton
   index: -1
 krusha
   rotate: false
-  xy: 518, 292
+  xy: 1284, 546
   size: 64, 64
   split: 16, 10, 2, 0
   orig: 64, 64
   offset: 0, 0
   index: -1
+login
+  rotate: false
+  xy: 1284, 742
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
 moon
   rotate: false
-  xy: 1542, 742
+  xy: 1542, 612
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -66,7 +73,7 @@ onlinebutton
   index: -1
 playbutton
   rotate: false
-  xy: 1542, 872
+  xy: 518, 358
   size: 256, 128
   split: 16, 7, 6, 5
   orig: 256, 128
@@ -79,9 +86,16 @@ pressedexit
   orig: 256, 128
   offset: 0, 0
   index: -1
-pressedonline
+pressedlogin
   rotate: false
   xy: 260, 228
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+pressedonline
+  rotate: false
+  xy: 1542, 742
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
@@ -93,9 +107,23 @@ pressedplay
   orig: 256, 128
   offset: 0, 0
   index: -1
+pressedregister
+  rotate: false
+  xy: 1284, 612
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+register
+  rotate: false
+  xy: 518, 228
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
 tile
   rotate: false
-  xy: 1800, 872
+  xy: 1800, 742
   size: 128, 128
   split: 0, 0, 0, 0
   orig: 128, 128
@@ -103,7 +131,7 @@ tile
   index: -1
 tomato
   rotate: false
-  xy: 648, 422
+  xy: 1930, 936
   size: 64, 64
   split: 0, 0, 0, 0
   orig: 64, 64
@@ -111,7 +139,7 @@ tomato
   index: -1
 tomatobtn
   rotate: false
-  xy: 1284, 612
+  xy: 776, 358
   size: 128, 128
   split: 0, 0, 0, 0
   orig: 128, 128
@@ -119,7 +147,7 @@ tomatobtn
   index: -1
 tomatobtnpress
   rotate: false
-  xy: 518, 358
+  xy: 1800, 872
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

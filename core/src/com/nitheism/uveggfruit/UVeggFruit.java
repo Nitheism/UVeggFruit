@@ -14,7 +14,9 @@ public class UVeggFruit extends Game {
     public void create() {
         music = Gdx.audio.newMusic(Gdx.files.internal("onlymeith_-_1033.mp3"));
         music.play();
-        MenuStage menuStage = new MenuStage(this, music);
+        //FirstTime firstTime = new FirstTime(this,music);
+        //setScreen(firstTime);
+        MenuStage menuStage = new MenuStage(this, music, true);
         setScreen(menuStage);
     }
 

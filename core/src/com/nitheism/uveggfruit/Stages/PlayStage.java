@@ -50,7 +50,7 @@ public class PlayStage implements Screen {
             stage.getBatch().end();
             UI.getScripts().clear();
             if (Gdx.input.justTouched()) {
-                mStage = new MenuStage(uvf, music);
+                mStage = new MenuStage(uvf, music, musicOn);
                 this.hide();
                 uvf.setScreen(mStage);
             }
@@ -62,7 +62,7 @@ public class PlayStage implements Screen {
             stage.getBatch().end();
             UI.getScripts().clear();
             if (Gdx.input.justTouched()) {
-                mStage = new MenuStage(uvf, music);
+                mStage = new MenuStage(uvf, music, musicOn);
                 this.hide();
                 uvf.setScreen(mStage);
             }
