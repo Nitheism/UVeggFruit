@@ -3,7 +3,7 @@ package com.nitheism.uveggfruit;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.nitheism.uveggfruit.Stages.MenuStage;
+import com.nitheism.uveggfruit.Stages.FirstTime;
 
 
 
@@ -14,10 +14,10 @@ public class UVeggFruit extends Game {
     public void create() {
         music = Gdx.audio.newMusic(Gdx.files.internal("onlymeith_-_1033.mp3"));
         music.play();
-        //FirstTime firstTime = new FirstTime(this,music);
-        //setScreen(firstTime);
-        MenuStage menuStage = new MenuStage(this, music, true);
-        setScreen(menuStage);
+        FirstTime firstTime = new FirstTime(this, music);
+        setScreen(firstTime);
+        // MenuStage menuStage = new MenuStage(this, music, true);
+        // setScreen(menuStage);
     }
 
     @Override

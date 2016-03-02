@@ -1,6 +1,7 @@
 package com.nitheism.uveggfruit.Stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -8,8 +9,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitheism.uveggfruit.UVeggFruit;
@@ -23,8 +27,6 @@ public class FirstTime implements Screen {
     private Stage stage;
     private UVeggFruit uVeggFruit;
     private Music music;
-    private MenuStage menuStage;
-    private TextField.TextFieldStyle textFieldStyle;
     private OrthographicCamera camera;
     private float densityT = 60 * Gdx.graphics.getDensity();
     private BitmapFont bitmapFont;
@@ -58,17 +60,43 @@ public class FirstTime implements Screen {
         FTFP.size = Math.round(densityT);
         bitmapFont = FTFG.generateFont(FTFP);
         FTFG.dispose();
-        textFieldStyle = new TextField.TextFieldStyle();
-        textFieldStyle.font = bitmapFont;
-        textFieldStyle.fontColor = Color.WHITE;
-
-        TextField username = new TextField("Username", textFieldStyle);
-        TextField password = new TextField("Password", textFieldStyle);
-
-        password.setPosition(400, 400);
-        username.setPosition(400, 500);
+        Skin defaultSkin = new Skin(Gdx.files.internal("uiskin.json"));
+        defaultSkin.add("default-font", bitmapFont, BitmapFont.class);
+        final TextField username = new TextField("", defaultSkin);
+        final TextField password = new TextField("", defaultSkin);
+        username.setSize(250, 50);
+        password.setSize(250, 50);
+        password.setPasswordCharacter('*');
+        password.setPasswordMode(true);
+        password.setPosition(500, 300);
+        username.setPosition(500, 400);
         stage.addActor(username);
         stage.addActor(password);
+        UI.getItem("regisbutton").addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
+                prefs.putString("user", username.getText());
+                prefs.putString("password", password.getText());
+                prefs.flush();
+                MenuStage m = new MenuStage(uVeggFruit, music, true);
+                stage.dispose();
+                uVeggFruit.setScreen(m);
+            }
+        });
+        UI.getItem("loginbutton").addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
+                prefs.putString("user", username.getText());
+                prefs.putString("password", password.getText());
+                prefs.flush();
+                MenuStage m = new MenuStage(uVeggFruit, music, true);
+                stage.dispose();
+                uVeggFruit.setScreen(m);
+            }
+        });
+
     }
 
     @Override

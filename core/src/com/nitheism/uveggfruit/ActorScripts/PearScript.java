@@ -7,6 +7,8 @@ import com.nitheism.uveggfruit.Players.VeggiePlayer;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 import com.uwsoft.editor.renderer.scripts.IActorScript;
 
+import java.util.ArrayList;
+
 
 public class PearScript extends FruitScript implements IActorScript {
 
@@ -17,11 +19,13 @@ public class PearScript extends FruitScript implements IActorScript {
     private boolean collision = false;
     private Rectangle bounds;
     private VeggiePlayer veggiePlayer;
+    private ArrayList<VeggieScript> veggies;
 
-    public PearScript(Batch batch, BitmapFont bitmapFont, VeggiePlayer v) {
+    public PearScript(Batch batch, BitmapFont bitmapFont, VeggiePlayer v, ArrayList<VeggieScript> veg) {
         this.batch = batch;
         this.bitmapFont = bitmapFont;
         veggiePlayer = v;
+        veggies = veg;
 
     }
 
@@ -38,11 +42,6 @@ public class PearScript extends FruitScript implements IActorScript {
     public void act(float delta) {
         if (collision) {
             drawHp();
-            if (dead()) {
-                veggiePlayer.setMoney(10);
-                pear.remove();
-                pear.getScripts().clear();
-            }
         } else {
             int speed = -150;
             pear.setX(pear.getX() + speed * delta);
@@ -97,5 +96,10 @@ public class PearScript extends FruitScript implements IActorScript {
         batch.begin();
         bitmapFont.draw(batch, Integer.toString(hp), pear.getX() + 20, pear.getY() + 95);
         batch.end();
+    }
+
+    @Override
+    public ArrayList<VeggieScript> getVeggieList() {
+        return veggies;
     }
 }

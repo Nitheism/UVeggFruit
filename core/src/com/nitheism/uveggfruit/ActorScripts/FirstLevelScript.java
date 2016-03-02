@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Timer;
 import com.nitheism.uveggfruit.Players.FruitPlayer;
 import com.nitheism.uveggfruit.Players.VeggiePlayer;
 import com.uwsoft.editor.renderer.SceneLoader;
@@ -25,6 +26,7 @@ public class FirstLevelScript implements IActorScript {
     private TomatoScript tScript;
     private CompositeActor tomato;
     private ArrayList<FruitScript> fruits;
+    private ArrayList<VeggieScript> veggies;
     private boolean musicOn;
 
     public FirstLevelScript(SceneLoader stageLoader, BitmapFont bitmapFont, Stage stage, VeggiePlayer vp, FruitPlayer fp, boolean musicOn) {
@@ -39,6 +41,7 @@ public class FirstLevelScript implements IActorScript {
     @Override
     public void init(CompositeActor entity) {
         fruits = new ArrayList<FruitScript>();
+        veggies = new ArrayList<VeggieScript>();
         ButtonClickListener buttonClickListener = new ButtonClickListener();
         entity.getItem("tomatobtn").addListener(buttonClickListener);
         entity.getItem("tomatobtn").addListener(new ClickListener() {
@@ -49,6 +52,7 @@ public class FirstLevelScript implements IActorScript {
                     tScript = new TomatoScript(stage.getBatch(), bitmapFont, fruits, fruitPlayer, musicOn);
                     tomato = new CompositeActor(stageLoader.loadVoFromLibrary("tomato"), stageLoader.getRm());
                     tomato.addScript(tScript);
+                    veggies.add(tScript);
                     stage.addActor(tomato);
                     veggiePlayer.setMoney(-10);
 
@@ -60,8 +64,18 @@ public class FirstLevelScript implements IActorScript {
 
     @Override
     public void act(float delta) {
-        if (timeaux >= 15) {
-            PearScript pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer);
+        for (VeggieScript v : veggies) {
+            for (FruitScript f : fruits) {
+                if (v.getBounds().overlaps(f.getBounds())) {
+                    CollisionTask t = new CollisionTask(f, v);
+                    Timer.schedule(t, 0, 0, 0);
+                }
+            }
+
+        }
+
+        if (timeaux >= 10) {
+            PearScript pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer, veggies);
             CompositeActor pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
             pear.addScript(pScript);
             stage.addActor(pear);

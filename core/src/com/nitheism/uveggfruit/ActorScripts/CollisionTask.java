@@ -11,6 +11,8 @@ public class CollisionTask extends Timer.Task {
     public CollisionTask (FruitScript fs,VeggieScript vs){
         this.f = fs;
         this.v = vs;
+        f.setCollision(true);
+        v.setCollision(true);
     }
 
 
@@ -19,6 +21,7 @@ public class CollisionTask extends Timer.Task {
         f.setHp(v.getDmg());
         v.setHp(f.getDmg());
         if(v.dead()){
+            f.getVeggieList().remove(v);
             v.getEntity().remove();
             v.getEntity().getScripts().clear();
             if(!f.dead()){
@@ -27,8 +30,8 @@ public class CollisionTask extends Timer.Task {
         }
         else if(f.dead()){
             v.getFruitsList().remove(f);
-            //f.getEntity().remove();
-            //f.getEntity().getScripts().clear();
+            f.getEntity().remove();
+            f.getEntity().getScripts().clear();
             if(!v.dead()){
                 v.setCollision(false);
             }

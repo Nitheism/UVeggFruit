@@ -4,6 +4,7 @@ package com.nitheism.uveggfruit.ActorScripts;
 import com.badlogic.gdx.math.Rectangle;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 
+import java.util.ArrayList;
 
 
 public abstract class FruitScript {
@@ -20,4 +21,6 @@ public abstract class FruitScript {
     public abstract CompositeActor getEntity();
 
     public abstract void drawHp();
+
+    public abstract ArrayList<VeggieScript> getVeggieList();
 }

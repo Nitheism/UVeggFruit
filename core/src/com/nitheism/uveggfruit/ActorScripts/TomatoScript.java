@@ -6,7 +6,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Timer;
 import com.nitheism.uveggfruit.Players.FruitPlayer;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 import com.uwsoft.editor.renderer.scripts.IActorScript;
@@ -25,7 +24,6 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     private int hp = 50;
     private Rectangle bounds;
     private boolean collision = false;
-    private FruitScript collidedFruit;
     private FruitPlayer fruitPlayer;
     private Sound punch;
     private boolean musicOn;
@@ -61,6 +59,11 @@ public class TomatoScript extends VeggieScript implements IActorScript {
         hp = hp - dmg;
     }
 
+    @Override
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
     public int getDmg() {
         return 10;
     }
@@ -80,14 +83,9 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     public void act(float delta) {
         if (collision) {
             drawHp();
-            if (dead()) {
-                fruitPlayer.setMoney(10);
-                tomato.remove();
-                tomato.getScripts().clear();
+            if (musicOn) {
+                punch.play();
             }
-            CollisionTask collisionTask = new CollisionTask(collidedFruit, this);
-            Timer.schedule(collisionTask, 0, 0, 0);
-
         } else {
             drawHp();
             tomato.setX(tomato.getX() + speed * delta);
@@ -99,29 +97,8 @@ public class TomatoScript extends VeggieScript implements IActorScript {
                 tomato.getScripts().clear();
             }
 
-            if (collisionFound()) {
-                collidedFruit.setCollision(true);
-                setCollision(true);
-                if (musicOn) {
-                    punch.play();
-                }
-            }
-
         }
 
-
-    }
-
-
-    private boolean collisionFound() {
-        for (FruitScript f : fruits) {
-            if (f.getBounds().overlaps(bounds)) {
-                collidedFruit = f;
-                return true;
-            }
-
-        }
-        return false;
 
     }
 
@@ -133,7 +110,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
         punch.dispose();
     }
 
-    private void drawHp() {
+    public void drawHp() {
         bch.begin();
         bFont.draw(bch, Integer.toString(hp), tomato.getX() + 20, tomato.getY() + 95);
         bch.end();
