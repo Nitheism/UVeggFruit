@@ -61,7 +61,6 @@ public class FirstTime implements Screen {
         bitmapFont = FTFG.generateFont(FTFP);
         FTFG.dispose();
         Skin defaultSkin = new Skin(Gdx.files.internal("uiskin.json"));
-        defaultSkin.add("default-font", bitmapFont, BitmapFont.class);
         final TextField username = new TextField("", defaultSkin);
         final TextField password = new TextField("", defaultSkin);
         username.setSize(250, 50);
