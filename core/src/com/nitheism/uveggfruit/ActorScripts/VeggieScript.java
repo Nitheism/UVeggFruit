@@ -2,11 +2,12 @@ package com.nitheism.uveggfruit.ActorScripts;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
+import com.uwsoft.editor.renderer.scripts.IActorScript;
 
 import java.util.ArrayList;
 
 
-public abstract class VeggieScript {
+public abstract class VeggieScript implements IActorScript {
 
     public abstract Rectangle getBounds();
 
