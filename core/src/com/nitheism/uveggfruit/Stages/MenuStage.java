@@ -87,12 +87,12 @@ public class MenuStage implements Screen {
             }
         });
         UI.getItem("onlinebutton").addListener(buttonClickListener);
-        UI.getItem("onlinebutton").addListener(new ClickListener() {
+        UI.getItem("onlinebutton").addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.dispose();
-                onlineStage = new OnlineStage(uVeggFruit, music, musicOn);
-                uVeggFruit.setScreen(onlineStage);
+                    stage.dispose();
+                    onlineStage = new OnlineStage(uVeggFruit,music,musicOn);
+                    uVeggFruit.setScreen(onlineStage);
             }
         });
         stage.addActor(UI);

@@ -47,7 +47,7 @@ public class PearScript extends FruitScript implements IActorScript {
     @Override
     public void act(float delta) {
         if (collision) {
-            if (musicOn) {
+            if(musicOn){
                 punch.play();
             }
             drawHp();

@@ -107,9 +107,10 @@ public class NetServer {
         players.get(conn).fp = cp.fp;
         for (Map.Entry<Connection, ClientPlayer> entry : players.entrySet()) {
             if (!entry.getKey().equals(conn)) {
-                if (cp.side.equals("Fruit")) {
+                if(cp.side.equals("Fruit")){
                     entry.getValue().fp = cp.fp;
-                } else {
+                }
+                else {
                     entry.getValue().vp = cp.vp;
                 }
             }

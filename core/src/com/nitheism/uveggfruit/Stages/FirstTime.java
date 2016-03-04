@@ -77,12 +77,12 @@ public class FirstTime implements Screen {
         final TextField password = new TextField("", defaultSkin);
         username.setSize(250, 50);
         password.setSize(250, 50);
-        selectBox.setSize(250, 50);
+        selectBox.setSize(250,50);
         password.setPasswordCharacter('*');
         password.setPasswordMode(true);
         password.setPosition(500, 400);
         username.setPosition(500, 500);
-        selectBox.setPosition(500, 300);
+        selectBox.setPosition(500,300);
         stage.addActor(selectBox);
         stage.addActor(username);
         stage.addActor(password);
