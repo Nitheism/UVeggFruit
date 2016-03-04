@@ -9,10 +9,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -40,6 +43,7 @@ public class FirstTime implements Screen {
 
     @Override
     public void show() {
+        final Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
         stage = new Stage();
         camera = new OrthographicCamera();
         Viewport vp = new StretchViewport(1280, 720, camera);
@@ -61,20 +65,30 @@ public class FirstTime implements Screen {
         bitmapFont = FTFG.generateFont(FTFP);
         FTFG.dispose();
         Skin defaultSkin = new Skin(Gdx.files.internal("uiskin.json"));
+        final SelectBox<String> selectBox = new SelectBox<String>(defaultSkin);
+        selectBox.setItems("Vegetable", "Fruit");
+        selectBox.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                prefs.putString("side", selectBox.getSelected().toString());
+            }
+        });
+
         final TextField username = new TextField("", defaultSkin);
         final TextField password = new TextField("", defaultSkin);
         username.setSize(250, 50);
         password.setSize(250, 50);
+        selectBox.setSize(250, 50);
         password.setPasswordCharacter('*');
         password.setPasswordMode(true);
-        password.setPosition(500, 300);
-        username.setPosition(500, 400);
+        password.setPosition(500, 400);
+        username.setPosition(500, 500);
+        selectBox.setPosition(500, 300);
+        stage.addActor(selectBox);
         stage.addActor(username);
         stage.addActor(password);
         UI.getItem("regisbutton").addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
                 prefs.putString("user", username.getText());
                 prefs.putString("password", password.getText());
                 prefs.flush();

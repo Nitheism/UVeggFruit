@@ -75,7 +75,7 @@ public class FirstLevelScript implements IActorScript {
         }
 
         if (timeaux >= 10) {
-            PearScript pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer, veggies);
+            PearScript pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer, veggies, musicOn);
             CompositeActor pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
             pear.addScript(pScript);
             stage.addActor(pear);

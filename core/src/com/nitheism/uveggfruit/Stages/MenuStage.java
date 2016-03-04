@@ -23,6 +23,7 @@ public class MenuStage implements Screen {
     private Stage stage;
     private Music music;
     private boolean musicOn;
+    private OnlineStage onlineStage;
 
 
 
@@ -72,7 +73,7 @@ public class MenuStage implements Screen {
         UI.getItem("playbutton").addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
+                stage.dispose();
                 playStage = new PlayStage(uVeggFruit, music, music.isPlaying());
                 uVeggFruit.setScreen(playStage);
             }
@@ -86,6 +87,14 @@ public class MenuStage implements Screen {
             }
         });
         UI.getItem("onlinebutton").addListener(buttonClickListener);
+        UI.getItem("onlinebutton").addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                stage.dispose();
+                onlineStage = new OnlineStage(uVeggFruit, music, musicOn);
+                uVeggFruit.setScreen(onlineStage);
+            }
+        });
         stage.addActor(UI);
 
     }

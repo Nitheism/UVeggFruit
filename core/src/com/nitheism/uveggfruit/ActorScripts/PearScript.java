@@ -1,5 +1,7 @@
 package com.nitheism.uveggfruit.ActorScripts;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,12 +22,15 @@ public class PearScript extends FruitScript implements IActorScript {
     private Rectangle bounds;
     private VeggiePlayer veggiePlayer;
     private ArrayList<VeggieScript> veggies;
+    private Sound punch;
+    private boolean musicOn;
 
-    public PearScript(Batch batch, BitmapFont bitmapFont, VeggiePlayer v, ArrayList<VeggieScript> veg) {
+    public PearScript(Batch batch, BitmapFont bitmapFont, VeggiePlayer v, ArrayList<VeggieScript> veg, boolean musicOn) {
         this.batch = batch;
         this.bitmapFont = bitmapFont;
         veggiePlayer = v;
         veggies = veg;
+        this.musicOn = musicOn;
 
     }
 
@@ -36,11 +41,15 @@ public class PearScript extends FruitScript implements IActorScript {
         pear.setPosition(1150, 129);
         bounds = new Rectangle(pear.getX(), pear.getY(), pear.getWidth(), pear.getHeight());
         drawHp();
+        punch = Gdx.audio.newSound(Gdx.files.internal("punch_or_whack_-Vladimir.mp3"));
     }
 
     @Override
     public void act(float delta) {
         if (collision) {
+            if (musicOn) {
+                punch.play();
+            }
             drawHp();
         } else {
             int speed = -150;

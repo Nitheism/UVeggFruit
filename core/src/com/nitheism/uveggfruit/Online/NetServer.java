@@ -93,6 +93,7 @@ public class NetServer {
         actor.addScript(ncr.getScript());
         for (Map.Entry<Connection, ClientPlayer> entry : players.entrySet()) {
             if (!entry.getKey().equals(conn)) {
+                entry.getValue().enemiePlayers.add(ncr.getScript());
                 entry.getValue().stage.addActor(actor);
             }
         }
@@ -102,6 +103,18 @@ public class NetServer {
         players.get(conn).stage = cp.stage;
         players.get(conn).enemiePlayers = cp.enemiePlayers;
         players.get(conn).side = cp.side;
+        players.get(conn).vp = cp.vp;
+        players.get(conn).fp = cp.fp;
+        for (Map.Entry<Connection, ClientPlayer> entry : players.entrySet()) {
+            if (!entry.getKey().equals(conn)) {
+                if (cp.side.equals("Fruit")) {
+                    entry.getValue().fp = cp.fp;
+                } else {
+                    entry.getValue().vp = cp.vp;
+                }
+            }
+        }
+
     }
 
     private void handleRecieved(Connection conn, Object obj) {
@@ -121,7 +134,7 @@ public class NetServer {
     private void handleDisconnect(Connection conn) {
         Log.debug("disconnected from server: " + conn);
         for (Map.Entry<Connection, ClientPlayer> entry : players.entrySet()) {
-            if (!entry.getValue().equals(conn)) {
+            if (!entry.getKey().equals(conn)) {
                 entry.getValue().stage.dispose();
             }
         }

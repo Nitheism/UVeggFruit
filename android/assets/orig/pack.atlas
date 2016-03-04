@@ -20,7 +20,7 @@ Music-96 (1)
   index: -1
 coin
   rotate: false
-  xy: 776, 324
+  xy: 1672, 708
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -50,7 +50,7 @@ login
   index: -1
 moon
   rotate: false
-  xy: 1542, 612
+  xy: 1800, 742
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -69,6 +69,13 @@ onlinebutton
   size: 256, 128
   split: 16, 8, 8, 6
   orig: 256, 128
+  offset: 0, 0
+  index: -1
+pearbutton
+  rotate: false
+  xy: 776, 358
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 playbutton
@@ -100,6 +107,13 @@ pressedonline
   orig: 256, 128
   offset: 0, 0
   index: -1
+pressedpearbtn
+  rotate: false
+  xy: 776, 228
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 pressedplay
   rotate: false
   xy: 1284, 872
@@ -123,7 +137,7 @@ register
   index: -1
 tile
   rotate: false
-  xy: 1800, 742
+  xy: 906, 358
   size: 128, 128
   split: 0, 0, 0, 0
   orig: 128, 128
@@ -139,7 +153,7 @@ tomato
   index: -1
 tomatobtn
   rotate: false
-  xy: 776, 358
+  xy: 1542, 612
   size: 128, 128
   split: 0, 0, 0, 0
   orig: 128, 128
