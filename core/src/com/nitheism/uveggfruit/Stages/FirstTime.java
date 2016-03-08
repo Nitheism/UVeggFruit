@@ -66,7 +66,7 @@ public class FirstTime implements Screen {
         FTFG.dispose();
         Skin defaultSkin = new Skin(Gdx.files.internal("uiskin.json"));
         final SelectBox<String> selectBox = new SelectBox<String>(defaultSkin);
-        selectBox.setItems("Vegetable", "Fruit");
+        selectBox.setItems("Veggie", "Fruit");
         selectBox.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 prefs.putString("side", selectBox.getSelected().toString());

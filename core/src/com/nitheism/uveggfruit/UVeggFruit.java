@@ -7,6 +7,8 @@ import com.badlogic.gdx.audio.Music;
 import com.nitheism.uveggfruit.Stages.FirstTime;
 import com.nitheism.uveggfruit.Stages.MenuStage;
 
+import java.util.Map;
+
 
 public class UVeggFruit extends Game {
     private Music music;
@@ -16,10 +18,11 @@ public class UVeggFruit extends Game {
         music = Gdx.audio.newMusic(Gdx.files.internal("onlymeith_-_1033.mp3"));
         music.play();
         Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
-        if (!prefs.getString("name").isEmpty() && !prefs.getString("password").isEmpty()) {
+        Map prefsmap = prefs.get();
+        if (!prefsmap.isEmpty()) {
             MenuStage menuStage = new MenuStage(this, music, true);
             setScreen(menuStage);
-        } else {
+        }else {
             FirstTime firstTime = new FirstTime(this, music);
             setScreen(firstTime);
         }

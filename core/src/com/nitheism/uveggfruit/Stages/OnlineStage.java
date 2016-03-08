@@ -136,6 +136,7 @@ public class OnlineStage implements Screen {
             }
 
         }
+
         stage.getBatch().begin();
         bitmapFont.draw(stage.getBatch(), Integer.toString(fp.getHealth()), 1200, 390);
         bitmapFont.draw(stage.getBatch(), Integer.toString(vp.getHealth()), 50, 390);
