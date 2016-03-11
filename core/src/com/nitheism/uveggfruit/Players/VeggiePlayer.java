@@ -1,6 +1,6 @@
 package com.nitheism.uveggfruit.Players;
 
-
+//defining the vegetable player parameters
 public class VeggiePlayer {
 
     private int health = 500;

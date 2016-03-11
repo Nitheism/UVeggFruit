@@ -9,9 +9,9 @@ public class CollisionRequest {
     private ArrayList<IActorScript> enemies;
     private ArrayList<IActorScript> allies;
 
-    public CollisionRequest(ArrayList<IActorScript> e, ArrayList<IActorScript> a) {
-        enemies = e;
-        allies = a;
+    public CollisionRequest(ArrayList<IActorScript> enemies, ArrayList<IActorScript> allies) {
+        this.enemies = enemies;
+        this.allies = allies;
     }
 
     public ArrayList<IActorScript> getEnemies() {

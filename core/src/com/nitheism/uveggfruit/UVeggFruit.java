@@ -15,12 +15,13 @@ public class UVeggFruit extends Game {
 
     @Override
     public void create() {
+        //initializinf preferences and music
         music = Gdx.audio.newMusic(Gdx.files.internal("onlymeith_-_1033.mp3"));
-        music.play();
         Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
+        //checks if preferences are empty and if empty runs the first time task,otherwise runs the menu screen
         Map prefsmap = prefs.get();
         if (!prefsmap.isEmpty()) {
-            MenuStage menuStage = new MenuStage(this, music, true);
+            MenuStage menuStage = new MenuStage(this, music,prefs.getBoolean("musicOn"));
             setScreen(menuStage);
         }else {
             FirstTime firstTime = new FirstTime(this, music);

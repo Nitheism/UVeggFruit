@@ -42,6 +42,7 @@ public class OnlineStage implements Screen {
     private float densityT = 30 * Gdx.graphics.getDensity();
     private UVeggFruit uvf;
 
+
     public OnlineStage(UVeggFruit uvf, Music music, boolean musicOn) {
         this.music = music;
         this.musicOn = musicOn;
@@ -159,7 +160,7 @@ public class OnlineStage implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (fp.getMoney() >= 10) {
                     CompositeActor pear = new CompositeActor(sc.loadVoFromLibrary("pear"), sc.getRm());
-                    PearScript ps = new PearScript(stage.getBatch(), bitmapFont, vp, veggies, musicOn);
+                    PearScript ps = new PearScript(stage.getBatch(), bitmapFont, vp, veggies, fruits, musicOn);
                     fruits.add(ps);
                     pear.addScript(ps);
                     stage.addActor(pear);
@@ -184,7 +185,7 @@ public class OnlineStage implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (vp.getMoney() >= 10) {
                     CompositeActor tomato = new CompositeActor(sc.loadVoFromLibrary("tomato"), sc.getRm());
-                    TomatoScript ts = new TomatoScript(stage.getBatch(), bitmapFont, fruits, fp, musicOn);
+                    TomatoScript ts = new TomatoScript(stage.getBatch(), bitmapFont, fruits, veggies, fp, musicOn);
                     veggies.add(ts);
                     tomato.addScript(ts);
                     stage.addActor(tomato);

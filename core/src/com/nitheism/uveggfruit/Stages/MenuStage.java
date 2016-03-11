@@ -1,6 +1,7 @@
 package com.nitheism.uveggfruit.Stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,7 +17,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scene2d.ButtonClickListener;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 
-
 public class MenuStage implements Screen {
     private PlayStage playStage;
     private UVeggFruit uVeggFruit;
@@ -30,8 +30,8 @@ public class MenuStage implements Screen {
     private OrthographicCamera camera;
 
 
-    public MenuStage(UVeggFruit uvf, Music music, boolean musicOn) {
-        uVeggFruit = uvf;
+    public MenuStage(UVeggFruit uVeggFruit, Music music, boolean musicOn) {
+        this.uVeggFruit = uVeggFruit;
         this.music = music;
         this.musicOn = musicOn;
 
@@ -40,19 +40,23 @@ public class MenuStage implements Screen {
 
     @Override
     public void show() {
+        //gets preferences and sets camera and viewports to support multiple screens
+        final Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
         camera = new OrthographicCamera();
         Viewport vp = new StretchViewport(1280, 720, camera);
         stage = new Stage(vp);
+        //sets all input processors and clickListeners
         Gdx.input.setInputProcessor(stage);
         ButtonClickListener buttonClickListener = new ButtonClickListener();
         SceneLoader sc = new SceneLoader();
         CompositeItemVO sceneComposites = new CompositeItemVO(sc.loadScene("MainMenu").composite);
         CompositeActor UI = new CompositeActor(sceneComposites, sc.getRm());
+        //if music is allowed play it
         if (musicOn) {
             music.setLooping(true);
             music.play();
         }
-
+        //setting all the buttons with their listeners and handling the events
         UI.getItem("playbutton").addListener(buttonClickListener);
         UI.getItem("musicbutton").addListener(buttonClickListener);
         UI.getItem("musicbutton").addListener(new ClickListener() {
@@ -61,9 +65,13 @@ public class MenuStage implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (!music.isPlaying()) {
                     music.play();
+                    prefs.putBoolean("musicOn",true);
+                    prefs.flush();
 
                 } else {
+                    prefs.putBoolean("musicOn",false);
                     music.dispose();
+                    prefs.flush();
 
                 }
 
@@ -74,6 +82,7 @@ public class MenuStage implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 stage.dispose();
+                music.dispose();
                 playStage = new PlayStage(uVeggFruit, music, music.isPlaying());
                 uVeggFruit.setScreen(playStage);
             }
@@ -82,6 +91,7 @@ public class MenuStage implements Screen {
         UI.getItem("exitbutton").addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                music.dispose();
                 stage.dispose();
                 uVeggFruit.dispose();
             }
@@ -91,25 +101,30 @@ public class MenuStage implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                     stage.dispose();
+                    music.dispose();
                     onlineStage = new OnlineStage(uVeggFruit,music,musicOn);
                     uVeggFruit.setScreen(onlineStage);
             }
         });
+        //adding the scene
         stage.addActor(UI);
 
     }
 
     @Override
     public void render(float delta) {
+        //update every frame
         camera.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //draw and act every frame
         stage.act();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        //resize if the screen is smaller or bigger
         stage.getViewport().update(width, height, true);
 
     }
@@ -128,6 +143,8 @@ public class MenuStage implements Screen {
 
     @Override
     public void dispose() {
-        music.dispose();
+        stage.dispose();
+        playStage.dispose();
+        onlineStage.dispose();
     }
 }

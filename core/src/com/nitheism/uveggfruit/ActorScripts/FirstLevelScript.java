@@ -30,6 +30,7 @@ public class FirstLevelScript implements IActorScript {
     private boolean musicOn;
 
     public FirstLevelScript(SceneLoader stageLoader, BitmapFont bitmapFont, Stage stage, VeggiePlayer vp, FruitPlayer fp, boolean musicOn) {
+        //initialization
         this.stageLoader = stageLoader;
         this.bitmapFont = bitmapFont;
         this.stage = stage;
@@ -40,8 +41,11 @@ public class FirstLevelScript implements IActorScript {
 
     @Override
     public void init(CompositeActor entity) {
+        //initializing lists of fruits and vegetables
         fruits = new ArrayList<FruitScript>();
         veggies = new ArrayList<VeggieScript>();
+        /*creating ButtonClickListener to change the state of the button and normal
+        listener to handle the spawn of an unit and assign it to the button */
         ButtonClickListener buttonClickListener = new ButtonClickListener();
         entity.getItem("tomatobtn").addListener(buttonClickListener);
         entity.getItem("tomatobtn").addListener(new ClickListener() {
@@ -49,12 +53,12 @@ public class FirstLevelScript implements IActorScript {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if (veggiePlayer.getMoney() >= 10) {
-                    tScript = new TomatoScript(stage.getBatch(), bitmapFont, fruits, fruitPlayer, musicOn);
+                    tScript = new TomatoScript(stage.getBatch(), bitmapFont, fruits, veggies, fruitPlayer, musicOn);
                     tomato = new CompositeActor(stageLoader.loadVoFromLibrary("tomato"), stageLoader.getRm());
                     tomato.addScript(tScript);
                     veggies.add(tScript);
                     stage.addActor(tomato);
-                    veggiePlayer.setMoney(-10);
+                    veggiePlayer.setMoney(-tScript.moneyGain());
 
                 }
 
@@ -64,18 +68,20 @@ public class FirstLevelScript implements IActorScript {
 
     @Override
     public void act(float delta) {
+        //loops trough  the arraylists and checks if there is a collision between 2 actors
         for (VeggieScript v : veggies) {
             for (FruitScript f : fruits) {
                 if (v.getBounds().overlaps(f.getBounds())) {
-                    CollisionTask t = new CollisionTask(f, v);
+                    CollisionTask t = new CollisionTask(f, v, fruitPlayer, veggiePlayer);
                     Timer.schedule(t, 0, 0, 0);
+                    break;
                 }
             }
 
         }
-
+        //spawns a pear every 10 seconds
         if (timeaux >= 10) {
-            PearScript pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer, veggies,musicOn);
+            PearScript pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer, veggies, fruits, musicOn);
             CompositeActor pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
             pear.addScript(pScript);
             stage.addActor(pear);

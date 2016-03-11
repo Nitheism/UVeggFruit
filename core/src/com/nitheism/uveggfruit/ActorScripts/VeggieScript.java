@@ -6,7 +6,7 @@ import com.uwsoft.editor.renderer.scripts.IActorScript;
 
 import java.util.ArrayList;
 
-
+//abstract class used for all vegetable actors
 public abstract class VeggieScript implements IActorScript {
 
     public abstract Rectangle getBounds();
@@ -24,6 +24,8 @@ public abstract class VeggieScript implements IActorScript {
     public abstract void drawHp();
 
     public abstract ArrayList<FruitScript> getFruitsList();
+
+    public abstract int moneyGain();
 
 
 }

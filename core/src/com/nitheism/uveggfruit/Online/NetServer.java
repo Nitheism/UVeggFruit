@@ -10,7 +10,6 @@ import com.esotericsoftware.minlog.Log;
 import com.nitheism.uveggfruit.ActorScripts.CollisionTask;
 import com.nitheism.uveggfruit.ActorScripts.FruitScript;
 import com.nitheism.uveggfruit.ActorScripts.VeggieScript;
-import com.nitheism.uveggfruit.Players.FruitPlayer;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 
 import java.io.IOException;
@@ -19,12 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NetServer {
-    private Server server;
     private HashMap<Connection, ClientPlayer> players;
 
     public NetServer() {
         players = new HashMap<Connection, ClientPlayer>();
-        server = new Server();
+        Server server = new Server();
         NetManager.RegisterClasses(server.getKryo());
         try {
             server.bind(NetManager.tcpPort, NetManager.udpPort);
@@ -37,7 +35,7 @@ public class NetServer {
     }
 
     private Listener createListener() {
-        Listener listener = new Listener() {
+        return new Listener() {
             @Override
             public void connected(Connection connection) {
                 handleConnection(connection);
@@ -58,7 +56,6 @@ public class NetServer {
                 super.idle(connection);
             }
         };
-        return listener;
     }
 
     private void handleConnection(Connection conn) {
@@ -70,7 +67,7 @@ public class NetServer {
     private void handleCollisionRequest(Connection conn, CollisionRequest cr) {
         ArrayList<FruitScript> fruits;
         ArrayList<VeggieScript> veggies;
-        if (players.get(conn).side instanceof FruitPlayer) {
+        if (players.get(conn).getSide().equals("Fruit")) {
             fruits = (ArrayList) cr.getAllies();
             veggies = (ArrayList) cr.getEnemies();
         } else {
@@ -81,7 +78,7 @@ public class NetServer {
         for (FruitScript f : fruits) {
             for (VeggieScript v : veggies) {
                 if (f.getBounds().overlaps(v.getBounds())) {
-                    CollisionTask t = new CollisionTask(f, v);
+                    CollisionTask t = new CollisionTask(f, v,players.get(conn).getFp(),players.get(conn).getVp());
                     Timer.schedule(t, 0, 0, 0);
                 }
             }
@@ -93,25 +90,25 @@ public class NetServer {
         actor.addScript(ncr.getScript());
         for (Map.Entry<Connection, ClientPlayer> entry : players.entrySet()) {
             if (!entry.getKey().equals(conn)) {
-                entry.getValue().enemiePlayers.add(ncr.getScript());
-                entry.getValue().stage.addActor(actor);
+                entry.getValue().getEnemiePlayers().add(ncr.getScript());
+                entry.getValue().getStage().addActor(actor);
             }
         }
     }
 
     private void handleClientPlayer(Connection conn, ClientPlayer cp) {
-        players.get(conn).stage = cp.stage;
-        players.get(conn).enemiePlayers = cp.enemiePlayers;
-        players.get(conn).side = cp.side;
-        players.get(conn).vp = cp.vp;
-        players.get(conn).fp = cp.fp;
+        players.get(conn).setStage(cp.getStage());
+        players.get(conn).setEnemiePlayers(cp.getEnemiePlayers());
+        players.get(conn).setSide(cp.getSide());
+        players.get(conn).setVp(cp.getVp());
+        players.get(conn).setFp(cp.getFp());
         for (Map.Entry<Connection, ClientPlayer> entry : players.entrySet()) {
             if (!entry.getKey().equals(conn)) {
-                if(cp.side.equals("Fruit")){
-                    entry.getValue().fp = cp.fp;
+                if(cp.getSide().equals("Fruit")){
+                    entry.getValue().setFp(cp.getFp());
                 }
                 else {
-                    entry.getValue().vp = cp.vp;
+                    entry.getValue().setVp(cp.getVp());
                 }
             }
         }
@@ -136,7 +133,7 @@ public class NetServer {
         Log.debug("disconnected from server: " + conn);
         for (Map.Entry<Connection, ClientPlayer> entry : players.entrySet()) {
             if (!entry.getKey().equals(conn)) {
-                entry.getValue().stage.dispose();
+                entry.getValue().getStage().dispose();
             }
         }
         players.remove(conn);

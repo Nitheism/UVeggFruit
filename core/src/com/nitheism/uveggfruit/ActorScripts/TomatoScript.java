@@ -27,12 +27,16 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     private FruitPlayer fruitPlayer;
     private Sound punch;
     private boolean musicOn;
+    private int dmg = 10;
+    private ArrayList<VeggieScript> veggies;
 
-    public TomatoScript(Batch b, BitmapFont bf, ArrayList<FruitScript> fruits, FruitPlayer f, boolean musicOn) {
-        bch = b;
-        bFont = bf;
+    public TomatoScript(Batch bch, BitmapFont bFont, ArrayList<FruitScript> fruits, ArrayList<VeggieScript> veggies, FruitPlayer fruitPlayer, boolean musicOn) {
+        //initializing
+        this.bch = bch;
+        this.bFont = bFont;
         this.fruits = fruits;
-        fruitPlayer = f;
+        this.fruitPlayer = fruitPlayer;
+        this.veggies = veggies;
         this.musicOn = musicOn;
     }
 
@@ -55,6 +59,11 @@ public class TomatoScript extends VeggieScript implements IActorScript {
         return fruits;
     }
 
+    @Override
+    public int moneyGain() {
+        return dmg;
+    }
+
     public void setHp(int dmg) {
         hp = hp - dmg;
     }
@@ -65,11 +74,12 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     }
 
     public int getDmg() {
-        return 10;
+        return dmg;
     }
 
     @Override
     public void init(CompositeActor entity) {
+        //setting the actor position,bounds,drawing the needed text, initializing punch audio
         this.tomato = entity;
         tomato.setPosition(100, 129);
         bounds = new Rectangle(tomato.getX(), tomato.getY(), tomato.getWidth(), tomato.getHeight());
@@ -81,18 +91,21 @@ public class TomatoScript extends VeggieScript implements IActorScript {
 
     @Override
     public void act(float delta) {
+        //if there is a collision play punch if music is on and then draw HP
         if (collision) {
             drawHp();
             if (musicOn) {
                 punch.play();
             }
         } else {
-            drawHp();
+            //if there is no collision move forward and draw hp
             tomato.setX(tomato.getX() + speed * delta);
             bounds.setX(tomato.getX());
             drawHp();
+            //if entity is out if bounds destroy it
             if (tomato.getX() >= 1090) {
                 fruitPlayer.setHealth(100);
+                veggies.remove(this);
                 tomato.remove();
                 tomato.getScripts().clear();
             }
@@ -111,6 +124,7 @@ public class TomatoScript extends VeggieScript implements IActorScript {
     }
 
     public void drawHp() {
+        //draws the hp of the entity
         bch.begin();
         bFont.draw(bch, Integer.toString(hp), tomato.getX() + 20, tomato.getY() + 95);
         bch.end();

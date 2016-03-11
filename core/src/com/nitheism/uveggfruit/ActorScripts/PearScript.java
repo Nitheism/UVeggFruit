@@ -24,12 +24,16 @@ public class PearScript extends FruitScript implements IActorScript {
     private ArrayList<VeggieScript> veggies;
     private Sound punch;
     private boolean musicOn;
+    private int dmg = 10;
+    private ArrayList<FruitScript> fruits;
 
-    public PearScript(Batch batch, BitmapFont bitmapFont, VeggiePlayer v, ArrayList<VeggieScript> veg, boolean musicOn) {
+    public PearScript(Batch batch, BitmapFont bitmapFont, VeggiePlayer veggiePlayer, ArrayList<VeggieScript> veggies,ArrayList<FruitScript> fruits, boolean musicOn) {
+        //initializing
         this.batch = batch;
         this.bitmapFont = bitmapFont;
-        veggiePlayer = v;
-        veggies = veg;
+        this.veggiePlayer = veggiePlayer;
+        this.veggies = veggies;
+        this.fruits = fruits;
         this.musicOn = musicOn;
 
     }
@@ -37,6 +41,7 @@ public class PearScript extends FruitScript implements IActorScript {
 
     @Override
     public void init(CompositeActor entity) {
+        //setting the actor position,bounds,drawing the needed text, initializing punch audio
         this.pear = entity;
         pear.setPosition(1150, 129);
         bounds = new Rectangle(pear.getX(), pear.getY(), pear.getWidth(), pear.getHeight());
@@ -46,18 +51,22 @@ public class PearScript extends FruitScript implements IActorScript {
 
     @Override
     public void act(float delta) {
+        //if there is a collision play punch if music is on and then draw HP
         if (collision) {
             if(musicOn){
                 punch.play();
             }
             drawHp();
         } else {
+            //if there is no collision move forward and draw hp
             int speed = -150;
             pear.setX(pear.getX() + speed * delta);
             bounds.setX(pear.getX());
             drawHp();
+            //if entity is out if bounds destroy it
             if (pear.getX() <= 130) {
                 veggiePlayer.setHealth(100);
+                fruits.remove(this);
                 pear.remove();
                 pear.getScripts().clear();
             }
@@ -78,7 +87,7 @@ public class PearScript extends FruitScript implements IActorScript {
 
     @Override
     public int getDmg() {
-        return 10;
+        return dmg;
     }
 
     @Override
@@ -102,6 +111,7 @@ public class PearScript extends FruitScript implements IActorScript {
     }
 
     public void drawHp() {
+        //draws the entities hp
         batch.begin();
         bitmapFont.draw(batch, Integer.toString(hp), pear.getX() + 20, pear.getY() + 95);
         batch.end();
@@ -110,5 +120,10 @@ public class PearScript extends FruitScript implements IActorScript {
     @Override
     public ArrayList<VeggieScript> getVeggieList() {
         return veggies;
+    }
+
+    @Override
+    public int moneyGain() {
+        return dmg;
     }
 }

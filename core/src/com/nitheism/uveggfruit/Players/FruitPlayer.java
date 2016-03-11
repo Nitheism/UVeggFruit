@@ -1,6 +1,6 @@
 package com.nitheism.uveggfruit.Players;
 
-
+//defining the fruit player parameters
 public class FruitPlayer  {
     private int health = 500;
     private int money = 50;
