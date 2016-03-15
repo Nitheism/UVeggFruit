@@ -87,10 +87,10 @@ public class NetServer {
 
     private void handleNewCreepRequest(Connection conn, NewCreepRequest ncr) {
         CompositeActor actor = ncr.getActor();
-        actor.addScript(ncr.getScript());
+       // actor.addScript(ncr.getScript());
         for (Map.Entry<Connection, ClientPlayer> entry : players.entrySet()) {
             if (!entry.getKey().equals(conn)) {
-                entry.getValue().getEnemiePlayers().add(ncr.getScript());
+            //    entry.getValue().getEnemiePlayers().add(ncr.getScript());
                 entry.getValue().getStage().addActor(actor);
             }
         }

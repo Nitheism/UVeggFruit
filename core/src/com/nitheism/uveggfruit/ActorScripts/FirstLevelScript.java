@@ -79,7 +79,7 @@ public class FirstLevelScript implements IActorScript {
             }
 
         }
-        //spawns a pear every 10 seconds
+        //spawns a pear every 20 seconds since it is 1st level
         if (timeaux >= 10) {
             PearScript pScript = new PearScript(stage.getBatch(), bitmapFont, veggiePlayer, veggies, fruits, musicOn);
             CompositeActor pear = new CompositeActor(stageLoader.loadVoFromLibrary("pear"), stageLoader.getRm());
