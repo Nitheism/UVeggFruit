@@ -4,7 +4,7 @@ package com.nitheism.uveggfruit.Players;
 public class VeggiePlayer {
 
     private int health = 500;
-    private int money = 50;
+    private int money = 70;
     private int points = 0;
 
     public int getHealth() {

@@ -91,6 +91,7 @@ public class FirstTime implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 prefs.putString("user", username.getText());
                 prefs.putString("password", password.getText());
+                prefs.putInteger("level",1);
                 prefs.flush();
                 MenuStage m = new MenuStage(uVeggFruit, music, true);
                 stage.dispose();

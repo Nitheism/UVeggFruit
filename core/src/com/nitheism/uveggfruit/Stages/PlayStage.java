@@ -2,6 +2,7 @@ package com.nitheism.uveggfruit.Stages;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitheism.uveggfruit.ActorScripts.FirstLevelScript;
+import com.nitheism.uveggfruit.ActorScripts.SecondLevelScript;
+import com.nitheism.uveggfruit.GameMessages;
 import com.nitheism.uveggfruit.Players.FruitPlayer;
 import com.nitheism.uveggfruit.Players.VeggiePlayer;
 import com.nitheism.uveggfruit.UVeggFruit;
@@ -39,29 +42,48 @@ public class PlayStage implements Screen {
     private boolean musicOn;
     private SceneLoader stageLoader;
     private Screen thisScreen = this;
+    private GameMessages gameMessages = new GameMessages();
+    private int level;
 
 
-    public PlayStage(UVeggFruit uvf, Music music, boolean musicOn) {
+    public PlayStage(UVeggFruit uvf, Music music, boolean musicOn, int level) {
         this.uvf = uvf;
         this.music = music;
         this.musicOn = musicOn;
+        this.level = level;
     }
 
 
     public void draw() {
         if (veggiePlayer.getHealth() <= 0) {
             UI.getScripts().clear();
-            String loseGame = "Ohhh, you have been defeated, don't worry it was a small battle not the war, you can try again taping" +
-                    " on Menu and then play again";
-            startDialog(loseGame, false);
+            switch (level) {
+                case 1:
+                    UI.getScripts().clear();
+                    startDialog(gameMessages.getLoseFirstLevel(), false);
+                    break;
+                case 2:
+                    UI.getScripts().clear();
+                    startDialog(gameMessages.getLoseSecondLevel(), false);
+                    break;
+            }
+
         }
 
         if (fruitPlayer.getHealth() <= 0) {
             UI.getScripts().clear();
-            String winGame = "Congratulations!!! You won your first challange, but there is much that awaits you, and there are" +
-                    " new friends waiting for you on the next level, if you want to continue to the next level tap Next, if you want to quit" +
-                    " tap Menu";
-            startDialog(winGame, true);
+            switch (level) {
+                case 1:
+                    UI.getScripts().clear();
+                    startDialog(gameMessages.getWinFirstLevel(), true);
+                    break;
+                case 2:
+                    UI.getScripts().clear();
+                    startDialog(gameMessages.getWinSecondLevel(), true);
+                    break;
+            }
+
+
         }
 
         stage.getBatch().begin();
@@ -85,12 +107,33 @@ public class PlayStage implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 dialog.remove();
                 if (gameWon) {
-
-                }
-                else {
+                    switch (level) {
+                        case 1:
+                            level++;
+                            Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
+                            prefs.putInteger("level",level);
+                            prefs.flush();
+                            dialog.remove();
+                            stage.dispose();
+                            thisScreen.hide();
+                            PlayStage playStage = new PlayStage(uvf, music, musicOn, level);
+                            uvf.setScreen(playStage);
+                            break;
+                    }
+                } else {
                     //adding script in order to play the game and add it to the UI
-                    FirstLevelScript firstLevelScript = new FirstLevelScript(stageLoader, bitmapFont, stage, veggiePlayer, fruitPlayer, musicOn);
-                    UI.addScript(firstLevelScript);
+                    dialog.remove();
+                    switch (level) {
+                        case 1:
+                            FirstLevelScript firstLevelScript = new FirstLevelScript(stageLoader, bitmapFont, stage, veggiePlayer, fruitPlayer, musicOn);
+                            UI.addScript(firstLevelScript);
+                            break;
+                        case 2:
+                            SecondLevelScript secondLevelScript = new SecondLevelScript(stageLoader, bitmapFont, stage, veggiePlayer, fruitPlayer, musicOn);
+                            UI.addScript(secondLevelScript);
+                            break;
+                    }
+
                 }
             }
         });
@@ -144,13 +187,16 @@ public class PlayStage implements Screen {
             music.setLooping(true);
             music.play();
         }
-        String welcomeMsg = "Welcome, to the world. The war between the 2 factions, fruits and" +
-                " vegetables started long ago, when humans started to throw out food, and the space for living" +
-                " left for those fruits and vegetables turned to be too small, so they began fighting each other." +
-                " Let me introduce you to the TOMATOS this are our first warriors, you can call them by taping on the circle" +
-                " with their face on it. This is intoductory level so there will be 1 to none enemies,try yourself and let's us start" +
-                " the war. Tap the NEXT button to hide this dialog.";
-        startDialog(welcomeMsg, false);
+        switch (level) {
+            case 1:
+                startDialog(gameMessages.getWelcomeMessage(), false);
+                break;
+            case 2:
+                startDialog(gameMessages.getWelcomeMessagSecond(), false);
+
+        }
+
+
     }
 
     @Override

@@ -42,7 +42,7 @@ exitbutton
   index: -1
 krusha
   rotate: false
-  xy: 262, 36
+  xy: 776, 294
   size: 64, 64
   split: 16, 10, 2, 0
   orig: 64, 64
@@ -82,6 +82,20 @@ nextButton
   xy: 2, 36
   size: 128, 64
   orig: 128, 64
+  offset: 0, 0
+  index: -1
+onion
+  rotate: false
+  xy: 1930, 840
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+onionbtn
+  rotate: false
+  xy: 1800, 484
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 onlinebutton
@@ -135,6 +149,13 @@ pressedlogin
   orig: 256, 128
   offset: 0, 0
   index: -1
+pressedonionbuttom
+  rotate: false
+  xy: 1260, 356
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 pressedonline
   rotate: false
   xy: 1284, 486
@@ -144,7 +165,7 @@ pressedonline
   index: -1
 pressedpearbtn
   rotate: false
-  xy: 1800, 484
+  xy: 518, 164
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -172,7 +193,7 @@ register
   index: -1
 tile
   rotate: false
-  xy: 518, 164
+  xy: 648, 164
   size: 128, 128
   split: 0, 0, 0, 0
   orig: 128, 128
@@ -180,7 +201,7 @@ tile
   index: -1
 tomato
   rotate: false
-  xy: 1930, 840
+  xy: 262, 36
   size: 64, 64
   split: 0, 0, 0, 0
   orig: 64, 64

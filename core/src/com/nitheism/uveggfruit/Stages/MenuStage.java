@@ -24,6 +24,7 @@ public class MenuStage implements Screen {
     private Music music;
     private boolean musicOn;
     private OnlineStage onlineStage;
+    private int level;
 
 
 
@@ -40,8 +41,9 @@ public class MenuStage implements Screen {
 
     @Override
     public void show() {
-        //gets preferences and sets camera and viewports to support multiple screens
+         //gets preferences and sets camera and viewports to support multiple screens
         final Preferences prefs = Gdx.app.getPreferences("UVeggFruit");
+        level = prefs.getInteger("level");
         camera = new OrthographicCamera();
         Viewport vp = new StretchViewport(1280, 720, camera);
         stage = new Stage(vp);
@@ -83,7 +85,7 @@ public class MenuStage implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 stage.dispose();
                 music.dispose();
-                playStage = new PlayStage(uVeggFruit, music, music.isPlaying());
+                playStage = new PlayStage(uVeggFruit, music, music.isPlaying(),level);
                 uVeggFruit.setScreen(playStage);
             }
         });
