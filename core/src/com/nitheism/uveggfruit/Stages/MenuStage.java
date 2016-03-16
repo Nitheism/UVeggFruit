@@ -96,6 +96,7 @@ public class MenuStage implements Screen {
                 music.dispose();
                 stage.dispose();
                 uVeggFruit.dispose();
+                Gdx.app.exit();
             }
         });
         UI.getItem("onlinebutton").addListener(buttonClickListener);
@@ -148,5 +149,6 @@ public class MenuStage implements Screen {
         stage.dispose();
         playStage.dispose();
         onlineStage.dispose();
+        Gdx.app.exit();
     }
 }

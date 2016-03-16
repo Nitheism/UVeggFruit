@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -64,7 +65,7 @@ public class FirstTime implements Screen {
         FTFP.size = Math.round(densityT);
         bitmapFont = FTFG.generateFont(FTFP);
         FTFG.dispose();
-        Skin defaultSkin = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin defaultSkin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas(Gdx.files.internal("uiskin.atlas")));
         final SelectBox<String> selectBox = new SelectBox<String>(defaultSkin);
         selectBox.setItems("Veggie", "Fruit");
         selectBox.addListener(new ChangeListener() {

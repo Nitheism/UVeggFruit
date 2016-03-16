@@ -37,7 +37,7 @@ public class PlayStage implements Screen {
     private VeggiePlayer veggiePlayer;
     private UVeggFruit uvf;
     private CompositeActor UI;
-    private float densityT = 30 * Gdx.graphics.getDensity();
+    private float densityT = 18;
     private Music music;
     private boolean musicOn;
     private SceneLoader stageLoader;
